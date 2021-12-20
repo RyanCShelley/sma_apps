@@ -1,2 +1,5 @@
 plotly_express
 requests
+requests_html
+nltk
+spacy
