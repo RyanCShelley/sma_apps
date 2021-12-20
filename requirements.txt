@@ -3,6 +3,6 @@ requests
 requests-html
 nltk
 spacy
-python -m spacy download en_core_web_sm
+spacy download en_core_web_sm
 
 
