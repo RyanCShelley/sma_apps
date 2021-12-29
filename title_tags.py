@@ -124,6 +124,7 @@ stop_words = set(stopwords.words('english'))
 try: 
     word_tokens = word_tokenize(text) 
     filtered_sentence = []
+    
 except KeyError:
     print("{Please add a Title and hit enter")
   
