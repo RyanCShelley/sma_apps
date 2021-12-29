@@ -121,12 +121,10 @@ stop_words = set(stopwords.words('english'))
 
 # tokens of words  
 
-try: 
-    word_tokens = word_tokenize(text) 
-    filtered_sentence = []
+
+word_tokens = word_tokenize(text) 
+filtered_sentence = []
     
-except KeyError:
-    print("{Please add a Title and hit enter")
   
 for w in word_tokens: 
     if w not in stop_words: 
