@@ -104,10 +104,10 @@ if st.checkbox('Show SERP Data'):
     st.write(df)
 try:
     df['title'] = df['title'].astype(str)
+    text = " ".join([x for x in df["title"].tolist()if len(x) > 0])
 except KeyError:
     print("{Please add a Title and hit enter")
 
-text = " ".join([x for x in df["title"].tolist()if len(x) > 0])
 
 import nltk
 nltk.download('stopwords')
