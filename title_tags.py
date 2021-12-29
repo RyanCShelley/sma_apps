@@ -97,7 +97,7 @@ try:
     results = google_search(query)
     df = pd.DataFrame(results)
 except KeyError:
-    print(f"{Please add a keyword and hit enter")
+    print("{Please add a keyword and hit enter")
 
 if st.checkbox('Show SERP Data'):
     st.subheader('Top Ten Results')
