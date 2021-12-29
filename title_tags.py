@@ -28,7 +28,7 @@ st.title('Title Tag Optimization')
 
 st.subheader('Add Your Data')
 
-query = st.text_input("Put Your Target Keyword Here", value=" ")
+query = st.text_input("Put Your Target Keyword Here", value="SEO")
 
 
 def get_source(url):
