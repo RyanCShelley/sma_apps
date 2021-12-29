@@ -102,8 +102,10 @@ except KeyError:
 if st.checkbox('Show SERP Data'):
     st.subheader('Top Ten Results')
     st.write(df)
-
-df['title'] = df['title'].astype(str)
+try:
+    df['title'] = df['title'].astype(str)
+except KeyError:
+    print("{Please add a Title and hit enter")
 
 text = " ".join([x for x in df["title"].tolist()if len(x) > 0])
 
