@@ -31,6 +31,13 @@ st.subheader('Add Your Data')
 
 query = st.text_input("Put Your Target Keyword Here")
 
+with st.form(key='my_form_to_submit'):
+    ...
+    submit_button = st.form_submit_button(label='Submit')
+
+if submit_button:
+    ...<Code that should only be run after submit button has been clicked>...
+
 def get_source(url):
     try:
         session = HTMLSession()
