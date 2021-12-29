@@ -6,7 +6,6 @@ import numpy as np
 import plotly.express as px
 from requests_html import HTML
 from requests_html import HTMLSession
-
 import requests
 import random
 user_agent_list = [
@@ -29,7 +28,12 @@ st.title('Title Tag Optimization')
 
 st.subheader('Add Your Data')
 
-query = st.text_input("Put Your Target Keyword Here")
+with st.form(key='my_form_to_submit'):
+    ...
+    submit_button = st.form_submit_button(label='Submit')
+
+if submit_button:
+    query = st.text_input("Put Your Target Keyword Here")
 
 
 def get_source(url):
