@@ -97,8 +97,7 @@ with st.form(key='my_form_to_submit'):
     submit_button = st.form_submit_button(label='Submit')
 if submit_button:
    results = google_search(query)
-
-df = pd.DataFrame(results)
+    df = pd.DataFrame(results)
 
 if st.checkbox('Show SERP Data'):
     st.subheader('Top Ten Results')
