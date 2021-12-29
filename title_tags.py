@@ -93,21 +93,15 @@ def google_search(query):
     response = get_results(query)
     return parse_results(response)
 
-try: 
-    results = google_search(query)
-    df = pd.DataFrame(results)
-except KeyError:
-    print("{Please add a keyword and hit enter")
+results = google_search(query)
+df = pd.DataFrame(results)
 
 if st.checkbox('Show SERP Data'):
     st.subheader('Top Ten Results')
     st.write(df)
-try:
-    df['title'] = df['title'].astype(str)
-    text = " ".join([x for x in df["title"].tolist()if len(x) > 0])
-except KeyError:
-    print("{Please add a Title and hit enter")
 
+df['title'] = df['title'].astype(str)
+text = " ".join([x for x in df["title"].tolist()if len(x) > 0])
 
 import nltk
 nltk.download('stopwords')
