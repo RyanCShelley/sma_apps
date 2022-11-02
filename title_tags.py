@@ -30,6 +30,13 @@ st.subheader('Add Your Data')
 
 query = st.text_input("Put Your Target Keyword Here", value="Add Your Keyword")
 
+if(query != ""):
+   # Print welcome message if the value is not empty
+   print("Running Analysis on" %query )
+else:
+   # Print empty message
+   print("The query can't be empty.")
+
 
 def get_source(url):
     try:
