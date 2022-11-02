@@ -8,6 +8,9 @@ from requests_html import HTML
 from requests_html import HTMLSession
 import requests
 import random
+import spacy
+from collections import Counter
+
 user_agent_list = [
 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15',
 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101 Firefox/77.0',
@@ -104,9 +107,7 @@ if st.checkbox('Show SERP Data'):
 df['title'] = df['title'].astype(str)
 text = " ".join([x for x in df["title"].tolist()if len(x) > 0])
 
-# To ensure we only look at relevant words, let's remove some stop words. 
-import spacy
-from collections import Counter
+#
 
 nlp = spacy.load('en')
 doc = nlp(text)
