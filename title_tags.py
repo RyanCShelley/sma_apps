@@ -8,16 +8,6 @@ from requests_html import HTML
 from requests_html import HTMLSession
 import requests
 import random
-import nltk
-nltk.download('stopwords')
-nltk.download('punkt')
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize 
-set(stopwords.words('english'))
-import spacy
-from collections import Counter
-
-
 user_agent_list = [
 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15',
 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101 Firefox/77.0',
@@ -25,9 +15,7 @@ user_agent_list = [
 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) Gecko/20100101 Firefox/77.0',
 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36',
 ]
-
 url = 'https://httpbin.org/headers'
-
 for i in range(1,4):
 #Pick a random user agent
     user_agent = random.choice(user_agent_list)
@@ -40,7 +28,8 @@ st.title('Title Tag Optimization')
 
 st.subheader('Add Your Data')
 
-query = st.text_input("Put Your Target Keyword Here", value="Add Your Keyword") 
+query = st.text_input("Put Your Target Keyword Here", value="Add Your Keyword")
+
 
 def get_source(url):
     try:
@@ -105,97 +94,108 @@ def google_search(query):
 if query is not None:
     results = google_search(query)
     df = pd.DataFrame(results)
-    df['title'] = df['title'].astype(str)
-    text = " ".join([x for x in df["title"].tolist()if len(x) > 0])
 
-    if st.checkbox('Show SERP Data'):
-        st.subheader('Top Ten Results')
-        st.write(df)
+if st.checkbox('Show SERP Data'):
+    st.subheader('Top Ten Results')
+    st.write(df)
 
-    df['title'] = df['title'].astype(str)
-    text = " ".join([x for x in df["title"].tolist()if len(x) > 0])
+df['title'] = df['title'].astype(str)
+text = " ".join([x for x in df["title"].tolist()if len(x) > 0])
+
+import nltk
+nltk.download('stopwords')
+nltk.download('punkt')
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize 
+set(stopwords.words('english'))
 
 # set of stop words
-    stop_words = set(stopwords.words('english')) 
+stop_words = set(stopwords.words('english')) 
 
 # tokens of words  
 
 
-    word_tokens = word_tokenize(text) 
-    filtered_sentence = []
+word_tokens = word_tokenize(text) 
+filtered_sentence = []
     
   
-    for w in word_tokens: 
-        if w not in stop_words: 
-         filtered_sentence.append(w) 
+for w in word_tokens: 
+    if w not in stop_words: 
+        filtered_sentence.append(w) 
 
 
-    nlp = spacy.load("en_core_web_sm")
+import spacy
+from collections import Counter
 
-    doc = nlp(text)
+nlp = spacy.load("en_core_web_sm")
+
+doc = nlp(text)
 # all tokens that arent stop words or punctuations
-    words = [token.text
-        for token in doc
-        if not token.is_stop and not token.is_punct]
+words = [token.text
+         for token in doc
+         if not token.is_stop and not token.is_punct]
 
 # noun tokens that arent stop words or punctuations
-    nouns = [token.text
-        for token in doc
-        if (not token.is_stop and
-            not token.is_punct and
-            token.pos_ == "NOUN")]
+nouns = [token.text
+         for token in doc
+         if (not token.is_stop and
+             not token.is_punct and
+             token.pos_ == "NOUN")]
 
 # five most common tokens
-    word_freq = Counter(words)
-    common_words = word_freq.most_common(10)
+word_freq = Counter(words)
+common_words = word_freq.most_common(10)
 
 # five most common noun tokens
-    noun_freq = Counter(nouns)
-    common_nouns = noun_freq.most_common(10)
+noun_freq = Counter(nouns)
+common_nouns = noun_freq.most_common(10)
 
 
-    df_common_words = pd.DataFrame(common_words, columns = ['Word', 'Frequencey'])
+df_common_words = pd.DataFrame(common_words, columns = ['Word', 'Frequencey'])
 
-    st.subheader('Most Common Words In The SERPs')
-    st.table(df_common_words)
-    fig = px.bar(df_common_words, x='Word', y='Frequencey', )
-    fig.update_layout(xaxis={'categoryorder':'total descending'})
-    st.plotly_chart(fig)
-
-
-    st.subheader("Title Tag Optimization")
-    title_text = st.text_input("Add Your Current Title Tag Here")
+st.subheader('Most Common Words In The SERPs')
+st.table(df_common_words)
+fig = px.bar(df_common_words, x='Word', y='Frequencey', )
+fig.update_layout(xaxis={'categoryorder':'total descending'})
+st.plotly_chart(fig)
 
 
-    common_words, frequencey = map(list, zip(*common_words))
-
-    def title_optimization():
-        if len(title_text) >= 60:
-            return "Your title is too long."
-        else:
-            return "Your title meets length requirements."
-
-    def has_terms(): 
-        if any(x in title_text for x in common_words):
-            return "Your title tag contains important terms."
-        else:
-            return "Your title tag is missing important terms."
-
-    def missing_text(): 
-        missing = [i for i in common_words if i not in title_text] 
-        return missing
-
-    title_length = title_optimization()
-    title_characters = len(title_text)
-    title_characters = str(title_characters)
-    title_keywords = has_terms()
-    title_missing_keywords = missing_text()
-
-    st.subheader('Here are your reuslts')
-    st.write(title_length)
-    st.write('Your title has' + ' ' + title_characters + ' ' +  'characters')
-    st.write(title_keywords)
-    st.write('Add these terms to your title tag.')
-    st.table(title_missing_keywords)
+st.subheader("Title Tag Optimization")
+title_text = st.text_input("Add Your Current Title Tag Here")
 
 
+common_words, frequencey = map(list, zip(*common_words))
+
+def title_optimization():
+  if len(title_text) >= 60:
+   return "Your title is too long."
+  else:
+   return "Your title meets length requirements."
+
+def has_terms(): 
+  if any(x in title_text for x in common_words):
+    return "Your title tag contains important terms."
+  else:
+    return "Your title tag is missing important terms."
+
+def missing_text(): 
+    missing = [i for i in common_words if i not in title_text] 
+    return missing
+
+title_length = title_optimization()
+title_characters = len(title_text)
+title_characters = str(title_characters)
+title_keywords = has_terms()
+title_missing_keywords = missing_text()
+
+
+st.subheader('Here are your reuslts')
+st.write(title_length)
+
+st.write('Your title has' + ' ' + title_characters + ' ' +  'characters')
+
+st.write(title_keywords)
+
+st.write('Add these terms to your title tag.')
+
+st.table(title_missing_keywords)
