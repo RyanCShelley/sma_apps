@@ -8,7 +8,6 @@ from requests_html import HTML
 from requests_html import HTMLSession
 import requests
 import random
-import spacy
 from collections import Counter
 
 user_agent_list = [
