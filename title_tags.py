@@ -25,7 +25,9 @@ user_agent_list = [
 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) Gecko/20100101 Firefox/77.0',
 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36',
 ]
+
 url = 'https://httpbin.org/headers'
+
 for i in range(1,4):
 #Pick a random user agent
     user_agent = random.choice(user_agent_list)
@@ -33,6 +35,12 @@ for i in range(1,4):
     headers = {'User-Agent': user_agent}
 #Make the request
     response = requests.get(url,headers=headers)
+
+st.title('Title Tag Optimization')
+
+st.subheader('Add Your Data')
+
+query = st.text_input("Put Your Target Keyword Here", value="Add Your Keyword") 
 
 def get_source(url):
     try:
@@ -93,12 +101,6 @@ def parse_results(response):
 def google_search(query):
     response = get_results(query)
     return parse_results(response)
-
-st.title('Title Tag Optimization')
-
-st.subheader('Add Your Data')
-
-query = st.text_input("Put Your Target Keyword Here", value="Add Your Keyword")
 
 if query is not None:
     results = google_search(query)
