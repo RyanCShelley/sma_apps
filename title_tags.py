@@ -8,7 +8,7 @@ from requests_html import HTML
 from requests_html import HTMLSession
 import requests
 import random
-from collections import Counter
+
 
 user_agent_list = [
 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15',
@@ -101,11 +101,3 @@ if st.checkbox('Show SERP Data'):
     st.subheader('Top Ten Results')
     st.write(df)
 
-# Next we are going to analyze the most improtant terms in the title. Before we do this, we need to pull all the text together.    
-
-df['title'] = df['title'].astype(str)
-text = " ".join([x for x in df["title"].tolist()if len(x) > 0])
-
-#
-from gensim.parsing.preprocessing import remove_stopwords
-text = remove_stopwords(text)
