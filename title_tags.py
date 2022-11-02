@@ -91,8 +91,9 @@ def google_search(query):
     response = get_results(query)
     return parse_results(response)
 
-results = google_search(query)
-df = pd.DataFrame(results)
+if query is not None:
+    results = google_search(query)
+    df = pd.DataFrame(results)
 
 if st.checkbox('Show SERP Data'):
     st.subheader('Top Ten Results')
