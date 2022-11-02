@@ -108,25 +108,5 @@ df['title'] = df['title'].astype(str)
 text = " ".join([x for x in df["title"].tolist()if len(x) > 0])
 
 #
-
-nlp = spacy.load('en')
-doc = nlp(text)
-# all tokens that arent stop words or punctuations
-words = [token.text
-         for token in doc
-         if not token.is_stop and not token.is_punct]
-
-# noun tokens that arent stop words or punctuations
-nouns = [token.text
-         for token in doc
-         if (not token.is_stop and
-             not token.is_punct and
-             token.pos_ == "NOUN")]
-
-# five most common tokens
-word_freq = Counter(words)
-common_words = word_freq.most_common(10)
-
-# five most common noun tokens
-noun_freq = Counter(nouns)
-common_nouns = noun_freq.most_common(10)
+from gensim.parsing.preprocessing import remove_stopwords
+text = remove_stopwords(text)
