@@ -99,6 +99,12 @@ if st.checkbox('Show SERP Data'):
     st.subheader('Top Ten Results')
     st.write(df)
 
+# Next we are going to analyze the most improtant terms in the title. Before we do this, we need to pull all the text together.    
+
 df['title'] = df['title'].astype(str)
 text = " ".join([x for x in df["title"].tolist()if len(x) > 0])
 
+# To ensure we only look at relevant words, let's remove some stop words. 
+
+from gensim.parsing.preprocessing import remove_stopwords
+text = remove_stopwords(text)
